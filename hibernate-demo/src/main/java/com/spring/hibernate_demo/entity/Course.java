@@ -11,6 +11,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -38,6 +40,16 @@ private Instructor instructor;
 @JoinColumn(name = "course_id")
 private List<Review> review;
 
+@ManyToMany(fetch=FetchType.LAZY,
+            cascade = {CascadeType.DETACH,
+                      CascadeType.MERGE,
+                      CascadeType.PERSIST,
+                      CascadeType.REFRESH})
+@JoinTable (name="course_student",
+  joinColumns = @JoinColumn (name="course_id"),
+  inverseJoinColumns = @JoinColumn (name="student_id"))
+private List<Student> students;
+
 public Course(){
 }
 
@@ -63,6 +75,14 @@ public List<Review> getReview(){
 @Override
 public String toString() {
   return "Course [id=" + id + ", title=" + title + "]";
+}
+
+
+public void addStudent(Student stud){
+  if(students == null){
+      students = new ArrayList<>();
+  }
+  students.add(stud);
 }
 
 

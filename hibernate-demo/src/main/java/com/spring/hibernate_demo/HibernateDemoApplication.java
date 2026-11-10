@@ -1,9 +1,7 @@
 package com.spring.hibernate_demo;
 
 import org.springframework.boot.SpringApplication;
-
 import java.util.List;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +10,8 @@ import com.spring.hibernate_demo.entity.Course;
 import com.spring.hibernate_demo.entity.Instructor;
 import com.spring.hibernate_demo.entity.InstructorDetail;
 import com.spring.hibernate_demo.entity.Review;
+import com.spring.hibernate_demo.entity.Student;
+
 @SpringBootApplication
 public class HibernateDemoApplication {
   public static void main(String[] args) {
@@ -32,7 +32,8 @@ public class HibernateDemoApplication {
       // deleteInstructorOnly(app);
       // createCourseAndReview(app);
       // retrieveCourseAndReviews(app);
-      deleteCourseAndreviews(app);
+      // deleteCourseAndreviews(app);
+      createCourseAndStudents(app);
     };
   }
   private void findCoursesforInstructor(AppDao app) {
@@ -199,6 +200,20 @@ public class HibernateDemoApplication {
     System.out.println("Delete course:" + id);
     app.deleteCourseById(id);
     System.out.println("Deleted Successfully!");
+  }
+
+
+  private void createCourseAndStudents(AppDao app){
+    Course course = new Course("How To Be A FullStack Dev in Half A DAy");
+
+    Student student1 = new Student("Light", "Yagami", "light.yagami@example.com");
+    Student student2 = new Student("Lesie", "Andrews", "leslie.andrews@example.com");
+
+    course.addStudent(student1);
+    course.addStudent(student2);
+
+    app.save(course);
+    System.out.println("Successully enrolled!");
   }
 
 }
