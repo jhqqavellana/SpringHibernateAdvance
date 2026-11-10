@@ -31,7 +31,8 @@ public class HibernateDemoApplication {
       // updateInstructor(app);
       // deleteInstructorOnly(app);
       // createCourseAndReview(app);
-      retrieveCourseAndReviews(app);
+      // retrieveCourseAndReviews(app);
+      deleteCourseAndreviews(app);
     };
   }
   private void findCoursesforInstructor(AppDao app) {
@@ -181,6 +182,7 @@ public class HibernateDemoApplication {
     app.save(course);
   }
 
+
   private void retrieveCourseAndReviews(AppDao app){
     int id = 6;
     System.out.println("Get course and review from id:" + id);
@@ -191,5 +193,12 @@ public class HibernateDemoApplication {
     System.out.println(course.getReview());
   }
 
+
+  private void deleteCourseAndreviews(AppDao app){
+    int id = 6;
+    System.out.println("Delete course:" + id);
+    app.deleteCourseById(id);
+    System.out.println("Deleted Successfully!");
+  }
 
 }

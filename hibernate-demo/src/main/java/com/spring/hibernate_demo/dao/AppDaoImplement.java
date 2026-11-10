@@ -114,4 +114,13 @@ public Course findCourseAndReviewByCourseId(int theId){
   return courses.isEmpty() ? null : courses.get(0);
 }
 
+
+@Override 
+@Transactional 
+public void deleteCourseById(int theId){
+  Course course = em.find(Course.class, theId);
+  em.remove(course);
+}
+
+
 }
