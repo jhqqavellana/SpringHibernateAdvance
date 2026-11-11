@@ -275,7 +275,7 @@ private void deleteStudent(AppDao app){
   int id = 22;
   System.out.println("Delete student: " + id);
 
-  app.deleteCourseById(id);
+  app.deleteStudentById(id);
   System.out.println("Deleted successfully!");
 }
 
