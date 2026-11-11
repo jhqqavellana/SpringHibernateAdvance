@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.spring.hibernate_demo.entity.Course;
 import com.spring.hibernate_demo.entity.Instructor;
 import com.spring.hibernate_demo.entity.InstructorDetail;
+import com.spring.hibernate_demo.entity.Student;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -120,6 +121,48 @@ public Course findCourseAndReviewByCourseId(int theId){
 public void deleteCourseById(int theId){
   Course course = em.find(Course.class, theId);
   em.remove(course);
+}
+
+@Override 
+public Course findCourseAndStudentByCourseId(int theId){
+  TypedQuery<Course> query = em.createQuery(
+    "SELECT c FROM Course c"
+    + " LEFT JOIN FETCH c.students "
+    + "WHERE c.id=:data", Course.class);
+  query.setParameter("data", theId);
+  return query.getSingleResult();
+}
+
+@Override
+public Student findStudentAndCoursesByStudentId(int theId){
+  TypedQuery<Student> query = em.createQuery(
+    "SELECT s FROM Student s "
+    + "LEFT JOIN FETCH s.courses "
+    + "WHERE s.id=:data", Student.class);
+  query.setParameter("data", theId);
+  List<Student> students = query.getResultList();
+  return students.isEmpty() ? null : students.get(0);
+}
+
+@Override
+@Transactional 
+public void update(Student student){
+  em.merge(student);
+}
+
+@Override
+@Transactional 
+public void deleteStudentById(int theId){
+  Student student = em.find(Student.class, theId);
+
+  if(student != null){
+    List<Course> courses = student.getCourses();
+
+      for(Course c: courses){
+        c.getStudents().remove(student);
+      }
+  }
+  em.remove(student);
 }
 
 

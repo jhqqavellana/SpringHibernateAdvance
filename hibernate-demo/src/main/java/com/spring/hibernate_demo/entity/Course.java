@@ -85,5 +85,9 @@ public void addStudent(Student stud){
   students.add(stud);
 }
 
+public List<Student> getStudents() {
+  return students;
+}
+
 
 }

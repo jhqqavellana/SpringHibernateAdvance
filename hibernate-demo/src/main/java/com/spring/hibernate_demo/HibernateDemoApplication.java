@@ -33,9 +33,16 @@ public class HibernateDemoApplication {
       // createCourseAndReview(app);
       // retrieveCourseAndReviews(app);
       // deleteCourseAndreviews(app);
-      createCourseAndStudents(app);
+      // createCourseAndStudents(app);
+      // findCourseAndStudentByCourseId(app);
+      // findStudentAndCourse(app);
+      // addMoreCoursesForStudent(app);
+      // deleteCourseById(app);
+      deleteStudent(app);
     };
   }
+
+
   private void findCoursesforInstructor(AppDao app) {
     int id = 22;
     System.out.println("Find instructor id: " + id);
@@ -215,5 +222,62 @@ public class HibernateDemoApplication {
     app.save(course);
     System.out.println("Successully enrolled!");
   }
+
+
+  private void findCourseAndStudentByCourseId (AppDao app){
+    int id = 8;
+    Course course = app.findCourseAndStudentByCourseId(id);
+    System.out.println("Course: " + course);
+    System.out.println("Students: " + course.getStudents());
+  }
+
+
+private void findStudentAndCourse(AppDao app){
+  int id = 21;
+  Student student = app.findStudentAndCoursesByStudentId(id);
+
+  System.out.println("Student: " + student);
+  System.out.println("Courses: " + student.getCourses());
+}
+
+
+private void addMoreCoursesForStudent(AppDao app){
+  int id = 22;
+
+  Student student = app.findStudentAndCoursesByStudentId(id);
+  if (student == null) {
+    System.out.println("No student found with id: " + id);
+    return;
+  }
+
+  Course course1 = new Course ("How to Test without Running Application");
+  Course course2 = new Course ("How to Develop without Computer");
+  Course course3 = new Course ("How to Be a Legit Developer");
+
+  student.addCourse(course1);
+  student.addCourse(course2);
+  student.addCourse(course3);
+
+  System.out.println("Succesfully enrolled to new courses!");
+  app.update(student);
+}
+
+
+private void deleteCourseById(AppDao app){
+  int id = 23;
+System.out.println("Delete course: " + id);
+app.deleteCourseById(id);
+System.out.println("Deleted successfully!");
+}
+
+
+private void deleteStudent(AppDao app){
+  int id = 22;
+  System.out.println("Delete student: " + id);
+
+  app.deleteCourseById(id);
+  System.out.println("Deleted successfully!");
+}
+
 
 }

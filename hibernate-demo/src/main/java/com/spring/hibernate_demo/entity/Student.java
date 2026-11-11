@@ -80,4 +80,8 @@ public void addCourse(Course course){
   course.addStudent(this);
 }
 
+public List<Course> getCourses() {
+  return this.courses;
+}
+
 }
