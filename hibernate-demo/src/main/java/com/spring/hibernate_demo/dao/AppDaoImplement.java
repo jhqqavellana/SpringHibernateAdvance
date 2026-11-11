@@ -155,13 +155,16 @@ public void update(Student student){
 public void deleteStudentById(int theId){
   Student student = em.find(Student.class, theId);
 
-  if(student != null){
-    List<Course> courses = student.getCourses();
-
-      for(Course c: courses){
-        c.getStudents().remove(student);
-      }
+  if(student == null){
+    return;
   }
+
+  List<Course> courses = student.getCourses();
+
+  for(Course c: courses){
+    c.getStudents().remove(student);
+  }
+
   em.remove(student);
 }
 
